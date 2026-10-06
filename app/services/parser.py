@@ -1,6 +1,9 @@
 from docx import Document
-def parsing(doc_name):
-    doc = Document(f"data/documents/fatwas/{doc_name}.docx")
+from pathlib import Path
+
+def parsing(file_path):
+    doc = Document(file_path)
+    path = Path(file_path)
 
     paragraphs = [
         p.text.strip()
@@ -8,8 +11,10 @@ def parsing(doc_name):
         if p.text.strip()
     ]
 
-    metadata = doc_name
-    header =paragraphs[0]
+    document_id = path.stem
+    document_type = path.parent.name
+
+    # header =paragraphs[0]
     content = ""
     opinion = ""
 
@@ -20,27 +25,31 @@ def parsing(doc_name):
 
         elif text == "الرأى":
             opinion = paragraphs[i + 1]
+
+        else :
+          general =  paragraphs[i]  
+
     sections = [
     {
-        "source_file": doc_name,
+        "document_id": document_id,
+        "document_type" : document_type,
         "section": "content",
         "text": content
     },
     {
-        "source_file": doc_name,
+        
+        "document_id": document_id,
+        "document_type" : document_type,
         "section": "opinion",
         "text": opinion
+    },
+    {     
+        "document_id": document_id,
+        "document_type" : document_type,
+        "section": "general",
+        "text": general
     }
+    
     ]
-    print("Metadata:")
-    print(metadata)
-
-    print("\nHeader:")
-    print(header)
-
-    print("\nContent:")
-    print(content)
-
-    print("\nOpinion:")
-    print(opinion)
+  
     return sections
