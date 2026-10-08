@@ -2,8 +2,8 @@ from collections import defaultdict
 from app.services.Mongodb import vector_search
 from app.services.Mongodb import collection
 
-def retrive_chunks(query, top_k=3,):
-    results=vector_search(query,3,collection=collection)
+def retrieve_chunks(query, top_k=3,):
+    results=vector_search(query,top_k,collection=collection)
     documents = defaultdict(list)
 
     for result in results:

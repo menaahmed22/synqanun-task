@@ -11,7 +11,6 @@ db_client = mongo_conn[MONGODB_DATABASE]
 
 collection = db_client["legal_chunks"]
 def insert_many(full_chunks):
-  collection.delete_many({})
   result = collection.insert_many(full_chunks)
   print("Inserted:", len(result.inserted_ids))
 
