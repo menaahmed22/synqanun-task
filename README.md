@@ -56,7 +56,6 @@ intfloat/multilingual-e5-base
 
 This model supports multilingual text, including Arabic.
 
-Documents are embedded using the `passage:` prefix, while search queries use the `query:` prefix.
 
 Embeddings are normalized and compared using **cosine similarity**.
 
@@ -135,7 +134,7 @@ synqanun-task/
 ## 8. Limitations
 
 * Retrieval quality depends on the embedding model and chunking strategy.
-* The current system uses semantic similarity without a separate keyword/BM25 retrieval stage.
+* The current system uses semantic similarity without a separate keyword retrieval stage.
 * Document ranking is based on the best matching chunk.
 * The system is designed for semantic search only and does not provide legal interpretation.
 
