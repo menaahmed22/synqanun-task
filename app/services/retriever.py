@@ -1,8 +1,9 @@
-
 from collections import defaultdict
+from app.services.Mongodb import vector_search
+from app.services.Mongodb import collection
 
-
-def retrive_chunks(results, top_k=3):
+def retrive_chunks(query, top_k=3,):
+    results=vector_search(query,3,collection=collection)
     documents = defaultdict(list)
 
     for result in results:
@@ -11,13 +12,15 @@ def retrive_chunks(results, top_k=3):
     document_results = []
 
     for document_id, document_chunks in documents.items():
+
         best_chunk = max(
             document_chunks,
-            key=lambda chunk: chunk["score"]
+            key=lambda x: x["score"]
         )
 
         document_results.append({
             "document_id": document_id,
+            "document_type": best_chunk["document_type"],
             "score": best_chunk["score"],
             "best_chunk_id": best_chunk["chunk_id"],
             "section": best_chunk["section"],
@@ -25,7 +28,7 @@ def retrive_chunks(results, top_k=3):
         })
 
     document_results.sort(
-        key=lambda document: document["score"],
+        key=lambda x: x["score"],
         reverse=True
     )
 

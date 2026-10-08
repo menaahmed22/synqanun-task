@@ -1,6 +1,6 @@
 
 from fastapi import FastAPI, Query, HTTPException
-from app.services.retriever import search_chunks, retrive_chunks
+from app.services.retriever import  retrive_chunks
 
 app = FastAPI(
     title="SynQanun Semantic Search API",
@@ -21,10 +21,10 @@ def search(
 ):
     try:
         # Retrieve matching chunks from MongoDB
-        chunks = search_chunks(q, limit=max(top_k * 5, 10))
+        # chunks = search_chunks(q, limit=max(top_k * 5, 10))
 
         # Aggregate chunks into document-level results
-        results = retrive_chunks(chunks, top_k=top_k)
+        results = retrive_chunks(q, top_k=top_k)
 
         return {
             "query": q,

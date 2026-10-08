@@ -2,11 +2,11 @@ from pymongo import MongoClient
 from google.colab import userdata
 from pymongo.operations import SearchIndexModel
 from collections import defaultdict
+from app.services.embedding import get_query_embedding
 
 MONGODB_URI = userdata.get("MONGODB_URI")
 mongo_conn = MongoClient(MONGODB_URI)
 MONGODB_DATABASE="synqanun"
-
 db_client = mongo_conn[MONGODB_DATABASE]
 
 collection = db_client["legal_chunks"]
@@ -15,7 +15,7 @@ def insert_many(full_chunks):
   result = collection.insert_many(full_chunks)
   print("Inserted:", len(result.inserted_ids))
 
-def create_search_index(collection):
+def generate_vectors_index(collection):
     index_model = SearchIndexModel(
         definition={
             "mappings": {
@@ -31,11 +31,13 @@ def create_search_index(collection):
         },
         name="legal_vector_index"
     )
-
     collection.create_search_index(model=index_model)
+    
 
-def vector_search(query_vector,top_k,collection):
+
+def vector_search(query,top_k,collection):
         
+    query_vector=get_query_embedding(query)
 
     client = mongo_conn
 
