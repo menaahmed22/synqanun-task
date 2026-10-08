@@ -1,18 +1,19 @@
+
 from collections import defaultdict
 
 
-documents = defaultdict(list)
-def retrive_chunks(results,top_k):
+def retrive_chunks(results, top_k=3):
+    documents = defaultdict(list)
+
     for result in results:
         documents[result["document_id"]].append(result)
 
-        document_results = []
+    document_results = []
 
     for document_id, document_chunks in documents.items():
-
         best_chunk = max(
             document_chunks,
-            key=lambda x: x["score"]
+            key=lambda chunk: chunk["score"]
         )
 
         document_results.append({
@@ -24,8 +25,8 @@ def retrive_chunks(results,top_k):
         })
 
     document_results.sort(
-        key=lambda x: x["score"],
+        key=lambda document: document["score"],
         reverse=True
     )
 
-    return document_results[:top_k]    
+    return document_results[:top_k]

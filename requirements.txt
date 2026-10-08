@@ -2,3 +2,6 @@ python-docx
 langchain-text-splitters
 sentence-transformers
 pymongo
+fastapi
+uvicorn[standard]==0.29.0
+pyngrok
