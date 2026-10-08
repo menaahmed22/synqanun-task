@@ -1,6 +1,6 @@
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-
-def chunk_sections(sections ,max_length=1000 ,chunk_overlap =100):
+from app.config import Settings
+def chunk_sections(sections ,max_length=Settings.chunk_size ,chunk_overlap =Settings.chunk_overlap):
     chunks = []
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=max_length,
