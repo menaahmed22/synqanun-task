@@ -14,9 +14,9 @@ def parsing(file_path):
     document_id = path.stem
     document_type = path.parent.name
 
-    # header =paragraphs[0]
     content = ""
     opinion = ""
+    general =[]
 
     for i, text in enumerate(paragraphs):
 
@@ -27,7 +27,7 @@ def parsing(file_path):
             opinion = paragraphs[i + 1]
 
         else :
-          general =  paragraphs[i]  
+            general.append(text)
 
     sections = [
     {
