@@ -3,13 +3,14 @@ from google.colab import userdata
 from pymongo.operations import SearchIndexModel
 from collections import defaultdict
 from app.services.embedding import get_query_embedding
+from app.config import Settings
 
-MONGODB_URI = userdata.get("MONGODB_URI")
+MONGODB_URI = Settings.mongodb_uri
 mongo_conn = MongoClient(MONGODB_URI)
-MONGODB_DATABASE="synqanun"
-db_client = mongo_conn[MONGODB_DATABASE]
+db_client = mongo_conn[Settings.mongodb_database]
+collection = db_client[Settings.mongodb_collection]
 
-collection = db_client["legal_chunks"]
+
 def insert_many(full_chunks):
   result = collection.insert_many(full_chunks)
   print("Inserted:", len(result.inserted_ids))
@@ -22,13 +23,13 @@ def generate_vectors_index(collection):
                 "fields": {
                     "embedding": {
                         "type": "knnVector",
-                        "dimensions": 768,
-                        "similarity": "cosine"
+                        "dimensions": Settings.search_index_dim,
+                        "similarity": Settings.search_index_similarity
                     }
                 }
             }
         },
-        name="legal_vector_index"
+        name=Settings.mongodb_vector_index
     )
     collection.create_search_index(model=index_model)
     

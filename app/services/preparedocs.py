@@ -4,6 +4,7 @@ from app.services.embedding import get_docs_embeddings
 from app.services.Mongodb import insert_many
 from app.services.Mongodb import collection
 from app.services.Mongodb import generate_vectors_index
+from app.config import Settings
 def prepare_docs(file_path):
   sections = parsing(file_path)
   chunks=chunk_sections(sections)

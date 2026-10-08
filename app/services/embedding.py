@@ -1,5 +1,8 @@
 from sentence_transformers import SentenceTransformer
-model = SentenceTransformer("intfloat/multilingual-e5-base")
+from app.config import Settings
+
+
+model = SentenceTransformer(Settings.embedding_model)
 
 def get_docs_embeddings(chunks):
   texts = [

@@ -20,10 +20,7 @@ def search(
     top_k: int = Query(default=3, alias="topK", ge=1, le=10)
 ):
     try:
-        # Retrieve matching chunks from MongoDB
-        # chunks = search_chunks(q, limit=max(top_k * 5, 10))
 
-        # Aggregate chunks into document-level results
         results = retrieve_chunks(q, top_k=top_k)
 
         return {
